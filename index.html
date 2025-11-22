@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3B82F6">
+    <meta name="description" content="Aplikasi manajemen belanja pintar untuk mengurangi impulsive buying">
+    <title>PrioriBuy - Smart Shopping List</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tabler Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="manifest" href="#" id="manifest-placeholder">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #F1F5F9;
+            color: #1E293B;
+            transition: all 0.3s ease;
+            padding-bottom: 80px;
+        }
+        
+        body.dark-mode {
+            background: #0F172A;
+            color: #F1F5F9;
+        }
+        
+        .container-custom {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9)),
+                        url('dompet.jpg') center/cover;
+            color: white;
+            padding: 60px 20px;
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .hero-section p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            background: white;
+            color: #3B82F6;
+            padding: 12px 32px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            color: #2563EB;
+        }
+        
+        .video-section {
+            margin-bottom: 24px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 16px;
+        }
+        
+        .card-custom {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .card-custom {
+            background: #1E293B;
+        }
+        
+        .item-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-mode .item-card {
+            background: #1E293B;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .badge-priority {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+        
+        .badge-non-priority {
+            background: #E0E7FF;
+            color: #6366F1;
+        }
+        
+        .btn-custom {
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom {
+            background: #3B82F6;
+            color: white;
+        }
+        
+        .btn-primary-custom:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger-custom {
+            background: #EF4444;
+            color: white;
+        }
+        
+        .form-control-custom {
+            border-radius: 12px;
+            border: 2px solid #E2E8F0;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .form-control-custom {
+            background: #0F172A;
+            border-color: #334155;
+            color: #F1F5F9;
+        }
+        
+        .form-control-custom:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 12px 0;
+            z-index: 1000;
+        }
+        
+        .dark-mode .bottom-nav {
+            background: #1E293B;
+        }
+        
+        .nav-item-custom {
+            text-align: center;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item-custom:hover {
+            background: #F1F5F9;
+        }
+        
+        .dark-mode .nav-item-custom:hover {
+            background: #334155;
+        }
+        
+        .nav-item-custom.active {
+            color: #3B82F6;
+        }
+        
+        .nav-item-custom i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item-custom span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #3B82F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.5s ease 1s forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .toast-custom {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9998;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+        
+        .dark-mode .toast-custom {
+            background: #1E293B;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #E2E8F0;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .filter-btn {
+            background: #1E293B;
+            border-color: #334155;
+        }
+        
+        .filter-btn.active {
+            background: #3B82F6;
+            color: white;
+            border-color: #3B82F6;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94A3B8;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #CBD5E1;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #3B82F6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast-custom" id="toast">
+        <span id="toast-message"></span>
+    </div>
+    
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h2>🛒 Belanja Lebih Cerdas!</h2>
+            <p>Kelola daftar belanja Anda dengan mudah, prioritaskan kebutuhan, dan hemat pengeluaran</p>
+            <a href="#" class="hero-cta" onclick="navigateTo('add'); return false;">
+                <i class="ti ti-plus"></i> Mulai Belanja
+            </a>
+        </div>
+        
+        <div class="container-custom">
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="card-custom">
+                    <h5 class="mb-3">📺 Tutorial Penggunaan</h5>
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Yq786CmSpfE" 
+                            title="Tutorial PrioriBuy" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Card -->
+            <div class="stats-card">
+                <h5 style="margin: 0 0 8px 0;">💰 Total Estimasi</h5>
+                <h2 style="margin: 0; font-size: 32px;" id="total-amount">Rp 0</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="priority-count">0</div>
+                        <div class="stat-label">Prioritas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="non-priority-count">0</div>
+                        <div class="stat-label">Non-Prioritas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-items">0</div>
+                        <div class="stat-label">Total Item</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search & Filter -->
+            <div class="search-box">
+                <input type="text" class="form-control form-control-custom" id="search-input" placeholder="🔍 Cari item...">
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="priority">Prioritas</button>
+                <button class="filter-btn" data-filter="non-priority">Non-Prioritas</button>
+                <select class="filter-btn" id="sort-select">
+                    <option value="default">Urutkan</option>
+                    <option value="price-asc">Harga Terendah</option>
+                    <option value="price-desc">Harga Tertinggi</option>
+                    <option value="name-asc">A - Z</option>
+                    <option value="name-desc">Z - A</option>
+                </select>
+            </div>
+            
+            <!-- Items List -->
+            <div id="items-container"></div>
+        </div>
+    </div>
+    
+    <!-- Add Item Page -->
+    <div class="page" id="add-page">
+        <div class="header">
+            <h1>➕ Tambah Item</h1>
+            <p>Tambahkan item baru ke daftar belanja</p>
+        </div>
+        
+        <div class="container-custom">
+            <div class="card-custom">
+                <form id="add-form">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Barang</label>
+                        <input type="text" class="form-control form-control-custom" id="item-name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Perkiraan Harga (Rp)</label>
+                        <input type="number" class="form-control form-control-custom" id="item-price" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Kategori</label>
+                        <select class="form-control form-control-custom" id="item-category" required>
+                            <option value="priority">⭐ Prioritas</option>
+                            <option value="non-priority">💡 Non-Prioritas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Catatan (Opsional)</label>
+                        <textarea class="form-control form-control-custom" id="item-notes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-custom btn-primary-custom w-100">
+                        <i class="ti ti-plus"></i> Tambah Item
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Priority List Page -->
+    <div class="page" id="priority-page">
+        <div class="header">
+            <h1>⭐ Daftar Prioritas</h1>
+            <p>Item yang wajib dibeli</p>
+        </div>
+        
+        <div class="container-custom">
+            <div class="card-custom">
+                <h5>Total Prioritas: <span id="priority-total">Rp 0</span></h5>
+            </div>
+            <div id="priority-items"></div>
+        </div>
+    </div>
+    
+    <!-- Settings Page -->
+    <div class="page" id="settings-page">
+        <div class="header">
+            <h1>⚙️ Pengaturan</h1>
+            <p>Kelola preferensi aplikasi</p>
+        </div>
+        
+        <div class="container-custom">
+            <div class="card-custom">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="mb-1">🌙 Mode Gelap</h6>
+                        <small class="text-muted">Aktifkan tema gelap</small>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="card-custom">
+                <h6 class="mb-3">📊 Data Management</h6>
+                <button class="btn btn-custom btn-primary-custom w-100 mb-2" onclick="exportData()">
+                    <i class="ti ti-download"></i> Export Data
+                </button>
+                <button class="btn btn-custom btn-primary-custom w-100 mb-2" onclick="document.getElementById('import-file').click()">
+                    <i class="ti ti-upload"></i> Import Data
+                </button>
+                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importData(event)">
+                <button class="btn btn-custom btn-danger-custom w-100" onclick="clearAllData()">
+                    <i class="ti ti-trash"></i> Hapus Semua Data
+                </button>
+            </div>
+            
+            <div class="card-custom">
+                <h6 class="mb-2">📱 Tentang Aplikasi</h6>
+                <p class="mb-1"><strong>PrioriBuy</strong> v1.0</p>
+                <p class="text-muted" style="font-size: 14px;">Aplikasi manajemen belanja pintar untuk mengurangi impulsive buying dan mengatur rencana belanja secara lebih terstruktur.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3 nav-item-custom active" data-page="home">
+                    <i class="ti ti-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="col-3 nav-item-custom" data-page="add">
+                    <i class="ti ti-plus"></i>
+                    <span>Tambah</span>
+                </div>
+                <div class="col-3 nav-item-custom" data-page="priority">
+                    <i class="ti ti-star"></i>
+                    <span>Prioritas</span>
+                </div>
+                <div class="col-3 nav-item-custom" data-page="settings">
+                    <i class="ti ti-settings"></i>
+                    <span>Pengaturan</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Data Storage
+        let items = JSON.parse(localStorage.getItem('prioritybuy-items')) || [];
+        let currentFilter = 'all';
+        let currentSort = 'default';
+        
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            renderItems();
+            updateStats();
+            setupEventListeners();
+            registerServiceWorker();
+        });
+        
+        // Theme Management
+        function loadTheme() {
+            const darkMode = localStorage.getItem('prioritybuy-darkmode') === 'true';
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.getElementById('dark-mode-toggle').checked = darkMode;
+        }
+        
+        document.getElementById('dark-mode-toggle').addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('prioritybuy-darkmode', this.checked);
+            showToast('Tema berhasil diubah');
+        });
+        
+        // Navigation
+        function setupEventListeners() {
+            document.querySelectorAll('.nav-item-custom').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.dataset.page;
+                    navigateTo(page);
+                });
+            });
+            
+            document.getElementById('add-form').addEventListener('submit', addItem);
+            document.getElementById('search-input').addEventListener('input', handleSearch);
+            document.getElementById('sort-select').addEventListener('change', handleSort);
+            
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderItems();
+                });
+            });
+        }
+        
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item-custom').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(page + '-page').classList.add('active');
+            document.querySelector(`[data-page="${page}"]`).classList.add('active');
+            
+            if (page === 'priority') {
+                renderPriorityItems();
+            }
+        }
+        
+        // Add Item
+        function addItem(e) {
+            e.preventDefault();
+            
+            const item = {
+                id: Date.now(),
+                name: document.getElementById('item-name').value,
+                price: parseInt(document.getElementById('item-price').value),
+                category: document.getElementById('item-category').value,
+                notes: document.getElementById('item-notes').value,
+                createdAt: new Date().toISOString()
+            };
+            
+            items.push(item);
+            saveItems();
+            renderItems();
+            updateStats();
+            
+            document.getElementById('add-form').reset();
+            showToast('Item berhasil ditambahkan!');
+            navigateTo('home');
+        }
+        
+        // Render Items
+        function renderItems() {
+            let filteredItems = [...items];
+            
+            // Apply filter
+            if (currentFilter !== 'all') {
+                filteredItems = filteredItems.filter(item => item.category === currentFilter);
+            }
+            
+            // Apply search
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                filteredItems = filteredItems.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Apply sort
+            if (currentSort !== 'default') {
+                filteredItems = sortItems(filteredItems, currentSort);
+            }
+            
+            const container = document.getElementById('items-container');
+            
+            if (filteredItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ti ti-shopping-cart-off"></i>
+                        <p>Belum ada item</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredItems.map(item => `
+                <div class="item-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="priority-badge ${item.category === 'priority' ? 'badge-priority' : 'badge-non-priority'}">
+                            ${item.category === 'priority' ? '⭐ Prioritas' : '💡 Non-Prioritas'}
+                        </span>
+                        <div>
+                            <button class="btn btn-sm btn-link text-primary" onclick="editItem(${item.id})" style="padding: 0 8px;">
+                                <i class="ti ti-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-link text-danger" onclick="deleteItem(${item.id})" style="padding: 0 8px;">
+                                <i class="ti ti-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h5 class="mb-2">${item.name}</h5>
+                    <h6 class="text-primary mb-2">Rp ${item.price.toLocaleString('id-ID')}</h6>
+                    ${item.notes ? `<p class="text-muted mb-0" style="font-size: 14px;">${item.notes}</p>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        // Update Stats
+        function updateStats() {
+            const priorityItems = items.filter(item => item.category === 'priority');
+            const nonPriorityItems = items.filter(item => item.category === 'non-priority');
+            const total = items.reduce((sum, item) => sum + item.price, 0);
+            
+            document.getElementById('total-amount').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('priority-count').textContent = priorityItems.length;
+            document.getElementById('non-priority-count').textContent = nonPriorityItems.length;
+            document.getElementById('total-items').textContent = items.length;
+        }
+        
+        // Delete Item
+        function deleteItem(id) {
+            if (confirm('Yakin ingin menghapus item ini?')) {
+                items = items.filter(item => item.id !== id);
+                saveItems();
+                renderItems();
+                updateStats();
+                renderPriorityItems();
+                showToast('Item berhasil dihapus');
+            }
+        }
+        
+        // Edit Item
+        function editItem(id) {
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+            
+            navigateTo('add');
+            document.getElementById('item-name').value = item.name;
+            document.getElementById('item-price').value = item.price;
+            document.getElementById('item-category').value = item.category;
+            document.getElementById('item-notes').value = item.notes || '';
+            
+            items = items.filter(i => i.id !== id);
+            saveItems();
+        }
+        
+        // Search
+        function handleSearch() {
+            renderItems();
+        }
+        
+        // Sort
+        function handleSort(e) {
+            currentSort = e.target.value;
+            renderItems();
+        }
+        
+        function sortItems(items, sortType) {
+            switch(sortType) {
+                case 'price-asc':
+                    return items.sort((a, b) => a.price - b.price);
+                case 'price-desc':
+                    return items.sort((a, b) => b.price - a.price);
+                case 'name-asc':
+                    return items.sort((a, b) => a.name.localeCompare(b.name));
+                case 'name-desc':
+                    return items.sort((a, b) => b.name.localeCompare(a.name));
+                default:
+                    return items;
+            }
+        }
+        
+        // Storage
+        function saveItems() {
+            localStorage.setItem('prioritybuy-items', JSON.stringify(items));
+        }
+        
+        // Export/Import
+        function exportData() {
+            const dataStr = JSON.stringify(items, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `prioritybuy-backup-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            showToast('Data berhasil diekspor!');
+        }
+        
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedItems = JSON.parse(e.target.result);
+                    if (Array.isArray(importedItems)) {
+                        items = importedItems;
+                        saveItems();
+                        renderItems();
+                        updateStats();
+                        showToast('Data berhasil diimpor!');
+                    } else {
+                        showToast('Format file tidak valid!');
+                    }
+                } catch (error) {
+                    showToast('Gagal membaca file!');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function clearAllData() {
+            if (confirm('Yakin ingin menghapus SEMUA data? Tindakan ini tidak dapat dibatalkan!')) {
+                items = [];
+                saveItems();
+                renderItems();
+                updateStats();
+                renderPriorityItems();
+                showToast('Semua data berhasil dihapus');
+            }
+        }
+        
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Service Worker Registration
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').then(function() {
+                    console.log('Service Worker Registered');
+                }).catch(function(err) {
+                    console.log('Service Worker Registration Failed', err);
+                });
+            }
+        }
+        
+        // Create manifest dynamically
+        const manifest = {
+            name: "PrioriBuy - Smart Shopping List",
+            short_name: "PrioriBuy",
+            description: "Aplikasi manajemen belanja pintar untuk mengurangi impulsive buying",
+            start_url: "/",
+            display: "standalone",
+            background_color: "#3B82F6",
+            theme_color: "#3B82F6",
+            icons: [
+                {
+                    src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%233B82F6' width='100' height='100'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E🛒%3C/text%3E%3C/svg%3E",
+                    sizes: "192x192",
+                    type: "image/svg+xml"
+                },
+                {
+                    src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%233B82F6' width='100' height='100'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E🛒%3C/text%3E%3C/svg%3E",
+                    sizes: "512x512",
+                    type: "image/svg+xml"
+                }
+            ]
+        };
+        
+        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.getElementById('manifest-placeholder').setAttribute('href', manifestURL);
+    </script>
+</body>
+</html>LocaleString('id-ID')}</h6>
+                    ${item.notes ? `<p class="text-muted mb-0" style="font-size: 14px;">${item.notes}</p>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function renderPriorityItems() {
+            const priorityItems = items.filter(item => item.category === 'priority');
+            const total = priorityItems.reduce((sum, item) => sum + item.price, 0);
+            
+            document.getElementById('priority-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+            
+            const container = document.getElementById('priority-items');
+            
+            if (priorityItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ti ti-star-off"></i>
+                        <p>Belum ada item prioritas</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = priorityItems.map(item => `
+                <div class="item-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="priority-badge badge-priority">⭐ Prioritas</span>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteItem(${item.id})">
+                            <i class="ti ti-trash"></i>
+                        </button>
+                    </div>
+                    <h5 class="mb-2">${item.name}</h5>
+                    <h6 class="text-primary mb-2">Rp ${item.price.to
